@@ -120,7 +120,7 @@ namespace Application.UserHandler
                         }
                         Documents documents = new(){
                             DocumentBytes = fileBytes,
-                            DocumentName = file.FileName,
+                            DocumentName = Path.GetFileNameWithoutExtension(file.FileName),
                             DocumentType = file.ContentType
                         };
                     files.Add(documents);
