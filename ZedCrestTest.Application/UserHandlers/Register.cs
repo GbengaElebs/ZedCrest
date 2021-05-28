@@ -59,20 +59,13 @@ namespace Application.UserHandler
                      user = await _context.Users.SingleOrDefaultAsync(x => x.EmailAddress == request.EmailAddress);
                      if(user == null) user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == request.UserName);
                 }
-                // var saveUserSuccess = await _context.SaveChangesAsync() > 0;
-                // if (!saveUserSuccess) throw new Exception("Problem Saving Changes");
                 //Upload Document to Cloudinary
                 string batchReference = GetRandomNumber(15);
 
                 AddDocumentToCloudinary(request, user, batchReference);
-                try{
+                
                     var success = await _context.SaveChangesAsync() > 0;
-                    if (!success) throw new Exception("Problem Saving Changes");
-
-                }catch(Exception ex)
-                {
-
-                }
+                    if (!success) throw new Exception("Problem Saving Changes");              
                 var returnObj = new RegisterUserReturnDto();
 
                 SendToQueue(request);

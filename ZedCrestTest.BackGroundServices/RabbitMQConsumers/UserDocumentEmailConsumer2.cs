@@ -18,13 +18,13 @@ namespace RabbitMQConsumers.UserDocumentEmailConsumer2
     {
         private IModel _channel;
         private IConnection _connection;
-        private readonly ISendEmailServiceA _sendEmailService;
+        private readonly ISendEmailServiceB _sendEmailService;
         private readonly string _hostname;
         private readonly string _queueName;
         private readonly string _username;
         private readonly string _password;
 
-        public UserDocumentEmailConsumer2(ISendEmailServiceA sendEmailService ,IOptions<RabbitMqConfiguration> rabbitMqOptions)
+        public UserDocumentEmailConsumer2(ISendEmailServiceB sendEmailService ,IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {
             _hostname = rabbitMqOptions.Value.Hostname;
             _queueName = rabbitMqOptions.Value.QueueName;
