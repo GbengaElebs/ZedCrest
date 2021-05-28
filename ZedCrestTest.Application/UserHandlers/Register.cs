@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,7 +23,10 @@ namespace Application.UserHandler
     {
         public class Command : IRequest<RegisterUserReturnDto>
         {
+            [Required (ErrorMessage ="UserName is Required")]
             public string UserName { get; set; }
+            [Required (ErrorMessage ="EmailAddress is Required")]
+            [EmailAddress (ErrorMessage ="Invalid Email Address")]
             public string EmailAddress { get; set; }
 
             [MaxFileSize(2 * 1024 * 1024)]
