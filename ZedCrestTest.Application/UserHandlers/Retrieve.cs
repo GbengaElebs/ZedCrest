@@ -3,6 +3,7 @@ using Application.Errors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -19,8 +20,11 @@ namespace Application.UserHandler
             public List<DocumentDetails> Documents { get; set; }
         }
         public class Query : IRequest<UserDetailsDto>
-        {           
+        {        
+            [Required (ErrorMessage ="EmailAddress is Required")]
+            [EmailAddress (ErrorMessage ="Invalid Email Address")]   
             public string EmailAddress { get; set; }
+            [Required (ErrorMessage ="Reference is Required")]   
             public string Reference { get; set; }
         }
 

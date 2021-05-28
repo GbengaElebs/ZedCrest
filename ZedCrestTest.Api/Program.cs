@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 using System;
-
+using ZedCrestTest.Persistence.DBContexts;
 
 namespace ZedCrestTest
 {
@@ -30,7 +31,22 @@ namespace ZedCrestTest
             try
             {
                 Log.Information("Starting up");
-                CreateHostBuilder(args).Build().Run();
+                //CreateHostBuilder(args).Build().Run();
+                var host = CreateHostBuilder(args).Build();
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    try
+                    {
+                        var context = services.GetRequiredService<ZedCrestContext>();
+                        context.Database.EnsureCreated();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "An Error Occured during Migration");
+                    }
+                }
+                host.Run();
 
             }
             catch (Exception ex)

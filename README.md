@@ -20,6 +20,7 @@ This solution consists of 6 projects
 
 # Database 
 - MYSQL Database
+- If there is no DataBase the database and its schema is created
 
 
 
